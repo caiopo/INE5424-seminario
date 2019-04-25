@@ -1,5 +1,3 @@
-// qemu-system-arm -M versatilepb -m 128M -nographic -s -S -kernel test.bin
-
 void print_uart0(const char *s);
 
 int main();
