@@ -1,5 +1,3 @@
-// qemu-system-arm -M versatilepb -m 128M -nographic -s -S -kernel test.bin
-
 volatile unsigned int* const UART0DR = (unsigned int*) 0x10009000;
 
 void print_uart0(const char *s) {
@@ -9,6 +7,7 @@ void print_uart0(const char *s) {
     }
 }
 
-void c_entry() {
+int main() {
     print_uart0("Hello world!\n");
+    return 0;
 }
