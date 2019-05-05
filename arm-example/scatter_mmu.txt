@@ -1,0 +1,38 @@
+LOAD 0x0000  0x00100000
+{
+  STARTUP 0x0000
+  {
+    startup.o(StartUp, +FIRST)
+    * (InRoot$$Sections)      ; Selects all sections that must be in a root region
+    * (+RO)
+    primes.o (+RO)
+  }
+  
+  SHARED_DATA +0x0 UNINIT     ; Marked as UNINIT, so secondary cores do not over write date during scatter loading
+  {
+    primes.o (+RW,+ZI)
+  }
+
+
+  LOCAL_TO_CORE 0x00100000 0x00100000
+  {
+    * (+RW,+ZI)
+  }
+
+  ; Break Down of stack/heap space
+  ; 0x001F,F000 - 0x001F,FFFF  - 64KB  FIQ Stack
+  ; 0x001F,E000 - 0x001F,EFFF  - 64KB  IRQ Stack
+  ; 0x001F,C000 - 0x001F,DFFF  - 128KB Application Stack/Heap
+
+  IRQ_STACK         0x001FE000 EMPTY 0x1000 {}
+  ARM_LIB_STACKHEAP 0x001FC000 EMPTY 0x2000 {}
+}
+
+
+
+PAGETABLES 0x00500000   0x00100000
+{
+  PAGETABLES 0x00500000 EMPTY 0x00100000
+  {
+  }
+}
