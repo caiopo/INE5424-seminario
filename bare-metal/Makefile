@@ -3,9 +3,11 @@ CPU=realview-pbx-a9
 COMPILER_PREFIX=/usr/local/arm/gcc-7.2.0/bin/arm
 
 CC=$(COMPILER_PREFIX)-gcc
-CXXFLAGS=-c -mcpu=${ISA} -g -fno-exceptions -nostdlib -lgcc
+CXXFLAGS=-c -mcpu=${ISA} -g -fno-exceptions -fno-threadsafe-statics -nostdlib -lgcc
 
 AS=$(COMPILER_PREFIX)-as
+
+QEMU_FLAGS=-M ${CPU} -m 128M -nographic -no-reboot -serial stdio -monitor telnet:0.0.0.0:1234,server,nowait
 
 export QEMU_AUDIO_DRV=none
 
@@ -23,7 +25,7 @@ link:
 	${COMPILER_PREFIX}-objcopy -O binary main.elf main.bin
 
 run:
-	qemu-system-arm -M ${CPU} -m 128M -nographic -no-reboot -monitor telnet:0.0.0.0:1234,server,nowait -kernel main.bin
+	qemu-system-arm ${QEMU_FLAGS} -kernel main.bin
 
 clean:
 	rm src/*.o *.bin *.elf

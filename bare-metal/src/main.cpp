@@ -7,22 +7,25 @@ void print_uart0(const char *s) {
     }
 }
 
-// class Teste {
-// public:
-//     const char* str;
+class SideEffect {
+public:
+    SideEffect(const char* s) {
+        print_uart0("SideEffect ");
+        print_uart0(s);
+        print_uart0("\n");
+    }
+};
 
-//     Teste(const char* _str) : str{_str} {}
-// };
-
-// const char* j = "Oi tudo bem?";
-
-// Teste t{j};
+SideEffect se_global1("global 1");
+SideEffect se_global2("global 2");
+SideEffect se_global3("global 3");
+SideEffect se_global4("global 4");
+SideEffect se_global5("global 5");
 
 extern "C" {
     int main() {
-        asm("movt r3, 0xAAAA");
+        static SideEffect se_static_local("static local");
+
         print_uart0("Hello world!\n");
-        asm("movt r4, 0xDDDD");
-        while(1);
     }
 }

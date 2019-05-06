@@ -1,10 +1,14 @@
 ENTRY(_Reset)
 SECTIONS
 {
-    . = 0x0;
+    .startup : {
+        src/startup.o(.vector_table)
+    }
+
+    . = 0x10000;
 
     .text : {
-        src/startup.o(.vector_table)
+        *(.entry)
         *(.text)
         *(.rodata)
     }
@@ -21,6 +25,13 @@ SECTIONS
         *(.data)
         . = ALIGN(8);
         _data_end = .;
+    }
+
+    init_array : {
+        _init_array_start = .;
+        *(.init_array)
+        *(.init_array.*)
+        _init_array_end = .;
     }
 
     . = ALIGN(8);
