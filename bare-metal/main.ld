@@ -1,5 +1,6 @@
-SECTIONS
-{
+SECTIONS {
+    . = 0x0;
+
     .startup : {
         src/startup.o(.vector_table)
     }

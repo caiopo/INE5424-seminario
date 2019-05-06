@@ -32,23 +32,27 @@ SideEffect se_global5("global 5");
 
 int zero_array[] = {0, 0, 0, 0, 0, 0};
 
+void test_bss_is_zero() {
+    bool is_zero = true;
+
+    for (int i = 0; i < sizeof(zero_array) / sizeof(zero_array[0]); ++i) {
+        if (zero_array[i] != 0) {
+            is_zero = false;
+        }
+    }
+
+    if (is_zero) {
+        print_uart0("zero_array was initialized\n");
+    } else {
+        print_uart0("zero_array was NOT initialized!!!\n");
+    }
+}
+
 extern "C" {
     int main() {
         SideEffect se_local("local");
 
-        bool is_zero = true;
-
-        for (int i = 0; i < sizeof(zero_array) / sizeof(zero_array[0]); ++i) {
-            if (zero_array[i] != 0) {
-                is_zero = false;
-            }
-        }
-
-        if (is_zero) {
-            print_uart0("zero_array was initialized\n");
-        } else {
-            print_uart0("zero_array was NOT initialized!!!\n");
-        }
+        test_bss_is_zero();
 
         print_uart0("Hello world!\n");
 
