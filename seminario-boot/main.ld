@@ -20,21 +20,21 @@ SECTIONS {
         _bss_end = .;
     }
 
-    data : {
+    .data : {
         _data_start = .;
         *(.data)
         . = ALIGN(8);
         _data_end = .;
     }
 
-    init_array : {
+    .init_array : {
         _init_array_start = .;
         *(.init_array)
         *(.init_array.*)
         _init_array_end = .;
     }
 
-    fini_array : {
+    .fini_array : {
         _fini_array_start = .;
         *(.fini_array)
         *(.fini_array.*)
