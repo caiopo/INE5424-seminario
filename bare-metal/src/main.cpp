@@ -9,11 +9,19 @@ void print_uart0(const char *s) {
 
 class SideEffect {
 public:
-    SideEffect(const char* s) {
-        print_uart0("SideEffect ");
-        print_uart0(s);
+    SideEffect(const char* s): _s(s) {
+        print_uart0("SideEffect created ");
+        print_uart0(_s);
         print_uart0("\n");
     }
+
+    ~SideEffect() {
+        print_uart0("SideEffect destroyed ");
+        print_uart0(_s);
+        print_uart0("\n");
+    }
+private:
+    const char* _s;
 };
 
 SideEffect se_global1("global 1");
@@ -24,8 +32,10 @@ SideEffect se_global5("global 5");
 
 extern "C" {
     int main() {
-        static SideEffect se_static_local("static local");
+        SideEffect se_local("local");
 
         print_uart0("Hello world!\n");
     }
+
+    void atexit() {}
 }

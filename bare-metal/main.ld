@@ -34,6 +34,13 @@ SECTIONS
         _init_array_end = .;
     }
 
+    fini_array : {
+        _fini_array_start = .;
+        *(.fini_array)
+        *(.fini_array.*)
+        _fini_array_end = .;
+    }
+
     . = ALIGN(8);
     _stack_start = .;
     . = . + 0x1000; /* 4kB of stack memory */

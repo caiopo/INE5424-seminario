@@ -3,7 +3,7 @@ CPU=realview-pbx-a9
 COMPILER_PREFIX=/usr/local/arm/gcc-7.2.0/bin/arm
 
 CC=$(COMPILER_PREFIX)-gcc
-CXXFLAGS=-c -mcpu=${ISA} -g -fno-exceptions -fno-threadsafe-statics -nostdlib -lgcc
+CXXFLAGS=-c -mcpu=${ISA} -g -fno-exceptions -fno-threadsafe-statics -fno-use-cxa-atexit -nostdlib -lgcc
 
 AS=$(COMPILER_PREFIX)-as
 

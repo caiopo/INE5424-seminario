@@ -37,4 +37,15 @@ blxlt   r2
 blt     globals_init_loop
 
 bl main
+
+ldr r0, =_fini_array_start
+ldr r1, =_fini_array_end
+
+globals_fini_loop:
+cmp     r0, r1
+it      lt
+ldrlt   r2, [r0], #4
+blxlt   r2
+blt     globals_fini_loop
+
 b .
